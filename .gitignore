@@ -8,3 +8,5 @@
 .DS_Store
 
 app/src/main/res/values/key.xml
+.idea/vcs.xml
+app/libs/
