@@ -8,19 +8,26 @@
     tools:context=".activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/main_activity_app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:layout_behavior="com.onesignal.sdktest.ui.FixAppBarLayoutBehavior">
 
         <android.support.v7.widget.Toolbar
+            android:id="@+id/main_activity_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:layout_scrollFlags="snap|scroll|enterAlways">
 
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <ScrollView
-        android:id="@+id/main_activity_scroll_view"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/main_activity_nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
@@ -29,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:paddingTop="8dp"
+            android:paddingTop="10dp"
             android:paddingBottom="12dp"
             android:clipChildren="false"
             android:clipToPadding="false"
@@ -72,6 +79,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

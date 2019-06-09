@@ -11,7 +11,7 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/email_sign_in_login_button"
-        android:layout_width="48dp"
+        android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
@@ -26,14 +26,15 @@
             android:gravity="center"
             android:paddingTop="6dp"
             android:paddingBottom="6dp"
-            android:paddingStart="2dp"
-            android:paddingEnd="2dp">
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp">
 
             <TextView
                 android:id="@+id/email_sign_in_login_button_text_view"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:maxLines="1"
                 android:text="LOGIN"
                 android:textSize="13sp"
                 android:textColor="@color/colorPrimary"
@@ -70,7 +71,7 @@
             android:hint="@string/email"
             android:textSize="17sp"
             android:textStyle="bold"
-            android:inputType="textEmailAddress"/>
+            android:inputType="textEmailAddress" />
 
     </android.support.design.widget.TextInputLayout>
 

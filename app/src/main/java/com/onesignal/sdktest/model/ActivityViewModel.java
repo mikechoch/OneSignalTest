@@ -2,6 +2,7 @@ package com.onesignal.sdktest.model;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 
 /**
  * This is the interface created with a few generic methods for setting a ViewModel
@@ -19,7 +20,7 @@ public interface ActivityViewModel {
      * Casts Context of the given Activity to an AppCompatActivity object
      * @return - AppCompatActivity used to get to specific methods to the Activity
      */
-    Activity getAppCompatActivity();
+    AppCompatActivity getAppCompatActivity();
 
     /**
      * Context is passed in and used to define all of the ui elements across the activity

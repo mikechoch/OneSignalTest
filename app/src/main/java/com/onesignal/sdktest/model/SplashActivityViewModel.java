@@ -21,7 +21,7 @@ public class SplashActivityViewModel implements ActivityViewModel {
     }
 
     @Override
-    public Activity getAppCompatActivity() {
+    public AppCompatActivity getAppCompatActivity() {
         return (AppCompatActivity) context;
     }
 
@@ -37,7 +37,7 @@ public class SplashActivityViewModel implements ActivityViewModel {
     @Override
     public ActivityViewModel setupInterfaceElements() {
 
-        setupOneSignalSDK();
+        intentTo.mainActivity();
 
         return this;
     }
@@ -55,17 +55,5 @@ public class SplashActivityViewModel implements ActivityViewModel {
     @Override
     public void networkDisconnected() {
 
-    }
-
-    private void setupOneSignalSDK() {
-        // OneSignal Initialization
-        OneSignal.startInit(context)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(true)
-                .init();
-
-        Log.d(Tag.DEBUG, "OneSignal SDK initialized");
-
-        intentTo.mainActivity();
     }
 }

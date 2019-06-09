@@ -1,6 +1,8 @@
 package com.onesignal.sdktest.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 
 import com.onesignal.sdktest.R;
@@ -24,6 +26,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (((MainActivityViewModel) viewModel).shouldScrollToTop()) {
+            NestedScrollView nestedScrollView = viewModel.getActivity().findViewById(R.id.main_activity_nested_scroll_view);
+            AppBarLayout appBarLayout = viewModel.getActivity().findViewById(R.id.main_activity_app_bar_layout);
+            if (nestedScrollView != null) {
+                nestedScrollView.smoothScrollTo(0, 0);
+                appBarLayout.setExpanded(true);
+            }
+        } else {
             super.onBackPressed();
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
         }
