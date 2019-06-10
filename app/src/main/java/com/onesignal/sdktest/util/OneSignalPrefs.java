@@ -25,6 +25,10 @@ public class OneSignalPrefs {
         sharedPreferences.edit().putString(Key.USER_EMAIL_SHARED_PREF, email).apply();
     }
 
+    public void clearCachedEmail() {
+        sharedPreferences.edit().remove(Key.USER_EMAIL_SHARED_PREF).apply();
+    }
+
     private OneSignalPrefs(Context context) {
         sharedPreferences = context.getSharedPreferences("com.onesignal.sdktest", Context.MODE_PRIVATE);
     }
@@ -35,5 +39,4 @@ public class OneSignalPrefs {
         }
         return oneSignalPrefs;
     }
-
 }

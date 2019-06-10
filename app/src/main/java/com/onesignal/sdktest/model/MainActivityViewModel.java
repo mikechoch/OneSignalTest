@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +22,8 @@ import com.onesignal.sdktest.type.Notification;
 import com.onesignal.sdktest.ui.RecyclerViewBuilder;
 import com.onesignal.sdktest.user.CurrentUser;
 import com.onesignal.sdktest.util.Font;
+import com.onesignal.sdktest.util.IntentTo;
+import com.onesignal.sdktest.util.OneSignalPrefs;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +32,8 @@ public class MainActivityViewModel implements ActivityViewModel {
 
     private CurrentUser currentUser;
     private Font font;
+    private IntentTo intentTo;
+    private OneSignalPrefs oneSignalPrefs;
     private RecyclerViewBuilder recyclerViewBuilder;
 
     private AppBarLayout appBarLayout;
@@ -62,6 +67,8 @@ public class MainActivityViewModel implements ActivityViewModel {
 
         currentUser = CurrentUser.getInstance();
         font = new Font(context);
+        intentTo = new IntentTo(context);
+        oneSignalPrefs = OneSignalPrefs.getInstance(context);
         recyclerViewBuilder = new RecyclerViewBuilder(context);
 
         appBarLayout = getActivity().findViewById(R.id.main_activity_app_bar_layout);
@@ -84,6 +91,7 @@ public class MainActivityViewModel implements ActivityViewModel {
         font.applyFont(notificationDemoTitleTextView, font.saralaBold);
 
         setupScrollView();
+        setupLoginLogoutButton();
         setupNotificationButtonLayout();
 
         return this;
@@ -127,10 +135,25 @@ public class MainActivityViewModel implements ActivityViewModel {
     private void setupLoginLogoutButton() {
         //TODO: Handle toggle login state
         if (currentUser.isSignedIn()) {
-
+            loginLogoutButton.setText(Text.LOGOUT);
         } else {
-
+            loginLogoutButton.setText(Text.LOGIN);
         }
+
+        loginLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentUser.isSignedIn()) {
+                    // Logout handling
+                    currentUser.setEmail(null);
+                    oneSignalPrefs.clearCachedEmail();
+                    intentTo.loginActivity();
+                } else {
+                    // Login handling
+                    intentTo.loginActivity();
+                }
+            }
+        });
     }
 
     private void sendDeviceNotification() {
