@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 public class Font {
 
-    public static Typeface saralaRegular;
-    public static Typeface saralaBold;
+    public Typeface saralaRegular;
+    public Typeface saralaBold;
 
 
     public Font(Context context) {

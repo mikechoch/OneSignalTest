@@ -64,19 +64,36 @@
             android:clipToPadding="false"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/main_activity_notification_recycler_view"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:nestedScrollingEnabled="false"
-                android:clipChildren="false"
-                android:clipToPadding="false">
+                android:orientation="vertical">
 
-                <!-- Populated with the Notification enum -->
+                <TextView
+                    android:id="@+id/main_activity_notification_demo_title_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:gravity="start|center_vertical"
+                    android:layout_marginStart="12dp"
+                    android:text="Notification Demo"
+                    android:textColor="@color/textColorDark"/>
 
-            </android.support.v7.widget.RecyclerView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/main_activity_notification_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:nestedScrollingEnabled="false"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <!-- Populated with the Notification enum -->
+
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
 
         </LinearLayout>
 

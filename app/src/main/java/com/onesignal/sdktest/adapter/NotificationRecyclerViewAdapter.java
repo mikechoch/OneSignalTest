@@ -83,7 +83,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         }
 
         private void populateInterfaceElements(int position) {
-            animate.toggleAnimationView(true, notificationImageView, notificationProgressBar);
+            animate.toggleAnimationView(true, View.INVISIBLE, notificationImageView, notificationProgressBar);
 
             notificationRelativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -101,7 +101,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
                         @Override
                         protected void setResource(Bitmap resource) {
                             notificationImageView.setImageBitmap(resource);
-                            animate.toggleAnimationView(false, notificationImageView, notificationProgressBar);
+                            animate.toggleAnimationView(false, View.INVISIBLE, notificationImageView, notificationProgressBar);
                         }
                     });
         }
