@@ -21,7 +21,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="TextLabel" parent="TextAppearance.AppCompat">
+    <style name="TextLabelRed" parent="TextAppearance.AppCompat">
         <!-- Hint color and label color in FALSE state -->
         <item name="android:textColorHint">@color/colorPrimary</item>
         <item name="android:textSize">20sp</item>
@@ -31,6 +31,18 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="android:textColorHighlight">@color/colorPrimary</item>
         <item name="android:textColorLink">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextLabelDark" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/textColorDark</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/textColorDark</item>
+        <item name="colorControlNormal">@color/textColorDark</item>
+        <item name="colorControlActivated">@color/textColorDark</item>
+        <item name="android:textColorHighlight">@color/textColorDark</item>
+        <item name="android:textColorLink">@color/textColorDark</item>
     </style>
 
 </resources>

@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         app:layout_behavior="com.onesignal.sdktest.ui.FixAppBarLayoutBehavior">
 
         <android.support.v7.widget.Toolbar
@@ -19,8 +21,28 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:layout_scrollFlags="snap|scroll|enterAlways">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start|center_vertical"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <ImageView
+                    android:layout_width="148dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="-8dp"
+                    android:src="@drawable/onesignal_rectangle"
+                    android:tint="@android:color/white"/>
+
+            </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
 
@@ -42,40 +64,19 @@
             android:clipToPadding="false"
             android:orientation="vertical">
 
-            <include
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/main_activity_notification_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/email_sign_in_layout"/>
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:nestedScrollingEnabled="false"
+                android:clipChildren="false"
+                android:clipToPadding="false">
 
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/title_body_notification" />
+                <!-- Populated with the Notification enum -->
 
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/title_body_notification" />
-
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/title_body_notification" />
-
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/title_body_notification" />
-
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/title_body_notification" />
-
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/title_body_notification" />
+            </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
 

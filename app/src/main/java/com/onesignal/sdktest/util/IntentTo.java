@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.onesignal.sdktest.R;
+import com.onesignal.sdktest.activity.LoginActivity;
 import com.onesignal.sdktest.activity.MainActivity;
 
 public class IntentTo {
@@ -22,6 +23,13 @@ public class IntentTo {
         ComponentName componentName = mainActivityIntent.getComponent();
         mainActivityIntent = Intent.makeRestartActivityTask(componentName);
         context.startActivity(mainActivityIntent);
+        ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    public void loginActivity() {
+        Intent loginActivityIntent = new Intent(context, LoginActivity.class);
+        loginActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(loginActivityIntent);
         ((Activity) context).overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 

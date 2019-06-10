@@ -7,6 +7,8 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -18,8 +20,11 @@ import android.widget.TextView;
 import com.onesignal.OSPermissionSubscriptionState;
 import com.onesignal.OneSignal;
 import com.onesignal.sdktest.R;
+import com.onesignal.sdktest.adapter.NotificationRecyclerViewAdapter;
 import com.onesignal.sdktest.constant.Tag;
 import com.onesignal.sdktest.constant.Text;
+import com.onesignal.sdktest.type.Notification;
+import com.onesignal.sdktest.ui.RecyclerViewBuilder;
 import com.onesignal.sdktest.user.CurrentUser;
 import com.onesignal.sdktest.util.Animate;
 import com.onesignal.sdktest.util.ProfileUtil;
@@ -32,16 +37,19 @@ public class MainActivityViewModel implements ActivityViewModel {
     private Animate animate;
     private CurrentUser currentUser;
     private ProfileUtil profileUtil;
+    private RecyclerViewBuilder recyclerViewBuilder;
 
     private AppBarLayout appBarLayout;
     private Toolbar toolbar;
     private NestedScrollView nestedScrollView;
     private TextInputLayout emailTextInputLayout;
     private TextInputEditText emailTextInputEditText;
-
     private RelativeLayout loginButton;
     private TextView loginButtonTextView;
     private ProgressBar loginButtonProgressBar;
+
+    private RecyclerView notificationRecyclerView;
+    private NotificationRecyclerViewAdapter notificationRecyclerViewAdapter;
 
     private boolean shouldScrollTop = false;
 
@@ -64,6 +72,7 @@ public class MainActivityViewModel implements ActivityViewModel {
         animate = new Animate();
         currentUser = CurrentUser.getInstance();
         profileUtil = new ProfileUtil();
+        recyclerViewBuilder = new RecyclerViewBuilder(getActivity());
 
         appBarLayout = getActivity().findViewById(R.id.main_activity_app_bar_layout);
         toolbar = getActivity().findViewById(R.id.main_activity_toolbar);
@@ -73,8 +82,7 @@ public class MainActivityViewModel implements ActivityViewModel {
         loginButton = getActivity().findViewById(R.id.email_sign_in_login_button_relative_layout);
         loginButtonTextView = getActivity().findViewById(R.id.email_sign_in_login_button_text_view);
         loginButtonProgressBar = getActivity().findViewById(R.id.email_sign_in_login_button_progress_bar);
-
-        setupOneSignalSDK();
+        notificationRecyclerView = getActivity().findViewById(R.id.main_activity_notification_recycler_view);
 
         return this;
     }
@@ -83,6 +91,7 @@ public class MainActivityViewModel implements ActivityViewModel {
     public ActivityViewModel setupInterfaceElements() {
         setupScrollView();
         setupSignInButton();
+        setupNotificationButtonLayout();
 
         return this;
     }
@@ -103,21 +112,13 @@ public class MainActivityViewModel implements ActivityViewModel {
 
     }
 
-    private void setupOneSignalSDK() {
-        // OneSignal Initialization
-        OneSignal.startInit(context)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(true)
-                .init();
-
-        Log.d(Tag.DEBUG, Text.ONESIGNAL_SDK_INIT);
-    }
-
     private void setupNotificationButtonLayout() {
+        recyclerViewBuilder.setupRecyclerView(notificationRecyclerView, 6, false, true);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        notificationRecyclerView.setLayoutManager(gridLayoutManager);
 
-
-
-
+        notificationRecyclerViewAdapter = new NotificationRecyclerViewAdapter(getActivity(), Notification.values());
+        notificationRecyclerView.setAdapter(notificationRecyclerViewAdapter);
     }
 
     private void setupScrollView() {
@@ -158,27 +159,30 @@ public class MainActivityViewModel implements ActivityViewModel {
         });
     }
 
-    /**
-     *
-     * @param email
-     */
     private void signInEmail(final String email) {
         OneSignal.setEmail(email, new OneSignal.EmailUpdateHandler() {
             @Override
             public void onSuccess() {
-                emailTextInputEditText.setEnabled(false);
-
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        emailTextInputEditText.setEnabled(false);
+                        loginButtonTextView.setText(Text.LOGOUT);
+                        animate.toggleAnimationView(false, loginButtonTextView, loginButtonProgressBar);
+                    }
+                });
                 currentUser.setEmail(email);
-
-                loginButtonTextView.setText(Text.LOGOUT);
-
-                animate.toggleAnimationView(false, loginButtonTextView, loginButtonProgressBar);
                 Log.d(Tag.DEBUG, Text.EMAIL_LOGIN_SUCCESSFUL);
             }
 
             @Override
             public void onFailure(OneSignal.EmailUpdateError error) {
-                animate.toggleAnimationView(false, loginButtonTextView, loginButtonProgressBar);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        animate.toggleAnimationView(false, loginButtonTextView, loginButtonProgressBar);
+                    }
+                });
                 Log.e(Tag.ERROR, error.getMessage());
             }
         });

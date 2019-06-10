@@ -8,9 +8,8 @@ import android.util.Log;
 import com.onesignal.OneSignal;
 import com.onesignal.sdktest.constant.Tag;
 import com.onesignal.sdktest.constant.Text;
-import com.onesignal.sdktest.util.IntentTo;
 
-public class SplashActivityViewModel implements ActivityViewModel {
+public class LoginActivityViewModel implements ActivityViewModel {
 
     private Context context;
 
@@ -28,8 +27,6 @@ public class SplashActivityViewModel implements ActivityViewModel {
     @Override
     public ActivityViewModel onActivityCreated(Context context) {
         this.context = context;
-
-        setupOneSignalSDK();
 
         return this;
     }
@@ -54,15 +51,5 @@ public class SplashActivityViewModel implements ActivityViewModel {
     public void networkDisconnected() {
 
     }
-
-    private void setupOneSignalSDK() {
-        // OneSignal Initialization
-        OneSignal.startInit(context)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(true)
-                .init();
-
-        Log.d(Tag.DEBUG, Text.ONESIGNAL_SDK_INIT);
-    }
-
+    
 }

@@ -2,12 +2,14 @@ package com.onesignal.sdktest.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,16 +17,21 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.onesignal.sdktest.R;
 import com.onesignal.sdktest.type.Notification;
+import com.onesignal.sdktest.util.Animate;
 
 public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private Animate animate;
+
     private Context context;
-    private Notification[] notifs;
+    private Notification[] notifications;
 
 
     public NotificationRecyclerViewAdapter(Context context, Notification[] notifications) {
         this.context = context;
-        this.notifs = notifications;
+        this.notifications = notifications;
+
+        this.animate = new Animate();
     }
 
 
@@ -43,53 +50,58 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((NotificationViewHolder) holder).setData(position, notifs[position]);
+        ((NotificationViewHolder) holder).setData(position, notifications[position]);
     }
 
     @Override
     public int getItemCount() {
-        return notifs.length;
+        return notifications.length;
     }
 
 
     public class NotificationViewHolder extends RecyclerView.ViewHolder {
 
-        private RelativeLayout categoryRelativeLayout;
-        private ImageView categoryImageView;
-        private TextView categoryTextView;
+        private RelativeLayout notificationRelativeLayout;
+        private ImageView notificationImageView;
+        private ProgressBar notificationProgressBar;
+        private TextView notificationTextView;
 
-        private Notification notif;
+        private Notification notification;
 
         NotificationViewHolder(View itemView) {
             super(itemView);
 
-            categoryRelativeLayout = itemView.findViewById(R.id.notification_recycler_view_item_relative_layout);
-            categoryImageView = itemView.findViewById(R.id.notification_recycler_view_item_image_view);
-            categoryTextView = itemView.findViewById(R.id.notification_recycler_view_item_text_view);
+            notificationRelativeLayout = itemView.findViewById(R.id.notification_recycler_view_item_relative_layout);
+            notificationImageView = itemView.findViewById(R.id.notification_recycler_view_item_image_view);
+            notificationProgressBar = itemView.findViewById(R.id.notification_recycler_view_item_progress_bar);
+            notificationTextView = itemView.findViewById(R.id.notification_recycler_view_item_text_view);
         }
 
         private void setData(int position, Notification notification) {
-            this.notif = notification;
+            this.notification = notification;
             populateInterfaceElements(position);
         }
 
         private void populateInterfaceElements(int position) {
-            categoryRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            animate.toggleAnimationView(true, notificationImageView, notificationProgressBar);
+
+            notificationRelativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                 }
             });
 
-            categoryTextView.setText(notif.getTitle());
+            notificationTextView.setText(notification.getTitle());
 
             Glide.with(context)
                     .asBitmap()
-                    .load(notif.getIconUrl())
-                    .into(new BitmapImageViewTarget(categoryImageView) {
+                    .load(notification.getIconUrl())
+                    .into(new BitmapImageViewTarget(notificationImageView) {
                         @Override
                         protected void setResource(Bitmap resource) {
-                            categoryImageView.setImageBitmap(resource);
+                            notificationImageView.setImageBitmap(resource);
+                            animate.toggleAnimationView(false, notificationImageView, notificationProgressBar);
                         }
                     });
         }

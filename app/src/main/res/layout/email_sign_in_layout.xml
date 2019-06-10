@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="12dp"
-    android:paddingStart="14dp"
-    android:paddingEnd="16dp"
+    android:paddingStart="18dp"
+    android:paddingEnd="20dp"
     android:clipChildren="false"
     android:clipToPadding="false">
 
@@ -62,7 +62,7 @@
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/email_sign_in_login_button"
         android:layout_marginEnd="6dp"
-        android:theme="@style/TextLabel">
+        android:theme="@style/TextLabelRed">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/email_sign_in_text_input_edit_text"
