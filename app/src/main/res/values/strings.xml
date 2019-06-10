@@ -1,6 +1,13 @@
 <resources>
     
     <string name="app_name">OneSignal Test</string>
+
     <string name="email">Email</string>
-    
+    <string name="login">Login</string>
+
+    <string name="continue_to_demo">Continue to demo</string>
+
+    <string name="notification_demo">Notification Demo</string>
+    <string name="account">Account</string>
+
 </resources>

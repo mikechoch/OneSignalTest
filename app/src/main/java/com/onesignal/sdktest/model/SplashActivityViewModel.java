@@ -71,7 +71,7 @@ public class SplashActivityViewModel implements ActivityViewModel {
         Log.d(Tag.DEBUG, Text.ONESIGNAL_SDK_INIT);
     }
 
-    public boolean isSignedIn(OneSignal.EmailUpdateHandler callback) {
+    public boolean attemptSignIn(OneSignal.EmailUpdateHandler callback) {
         boolean isSignedIn = oneSignalPrefs.exists(Key.USER_EMAIL_SHARED_PREF);
         if (isSignedIn) {
             String email = oneSignalPrefs.getCachedUserEmail();

@@ -14,6 +14,10 @@ public class CurrentUser {
         this.email = email;
     }
 
+    public boolean isSignedIn() {
+        return email != null;
+    }
+
     public static CurrentUser getInstance() {
         if (currentUser == null) {
             currentUser = new CurrentUser();

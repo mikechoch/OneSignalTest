@@ -101,7 +101,12 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
                         @Override
                         protected void setResource(Bitmap resource) {
                             notificationImageView.setImageBitmap(resource);
-                            animate.toggleAnimationView(false, View.INVISIBLE, notificationImageView, notificationProgressBar);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    animate.toggleAnimationView(false, View.INVISIBLE, notificationImageView, notificationProgressBar);
+                                }
+                            }, 300);
                         }
                     });
         }

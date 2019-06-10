@@ -3,32 +3,24 @@ package com.onesignal.sdktest.model;
 import android.app.Activity;
 import android.content.Context;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.onesignal.OSPermissionSubscriptionState;
 import com.onesignal.OneSignal;
 import com.onesignal.sdktest.R;
 import com.onesignal.sdktest.adapter.NotificationRecyclerViewAdapter;
-import com.onesignal.sdktest.constant.Tag;
 import com.onesignal.sdktest.constant.Text;
 import com.onesignal.sdktest.type.Notification;
 import com.onesignal.sdktest.ui.RecyclerViewBuilder;
 import com.onesignal.sdktest.user.CurrentUser;
-import com.onesignal.sdktest.util.Animate;
 import com.onesignal.sdktest.util.Font;
-import com.onesignal.sdktest.util.ProfileUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +35,10 @@ public class MainActivityViewModel implements ActivityViewModel {
     private Toolbar toolbar;
     private NestedScrollView nestedScrollView;
 
-    private TextView notificationdemoTitleTextView;
+    private TextView accountTitleTextView;
+    private Button loginLogoutButton;
+
+    private TextView notificationDemoTitleTextView;
     private RecyclerView notificationRecyclerView;
     private NotificationRecyclerViewAdapter notificationRecyclerViewAdapter;
 
@@ -73,7 +68,10 @@ public class MainActivityViewModel implements ActivityViewModel {
         toolbar = getActivity().findViewById(R.id.main_activity_toolbar);
         nestedScrollView = getActivity().findViewById(R.id.main_activity_nested_scroll_view);
 
-        notificationdemoTitleTextView = getActivity().findViewById(R.id.main_activity_notification_demo_title_text_view);
+        accountTitleTextView = getActivity().findViewById(R.id.main_activity_account_title_text_view);
+        loginLogoutButton = getActivity().findViewById(R.id.main_activity_account_login_logout_button);
+
+        notificationDemoTitleTextView = getActivity().findViewById(R.id.main_activity_notification_demo_title_text_view);
         notificationRecyclerView = getActivity().findViewById(R.id.main_activity_notification_recycler_view);
 
         return this;
@@ -81,7 +79,9 @@ public class MainActivityViewModel implements ActivityViewModel {
 
     @Override
     public ActivityViewModel setupInterfaceElements() {
-        font.applyFont(notificationdemoTitleTextView, font.saralaBold);
+        font.applyFont(accountTitleTextView, font.saralaBold);
+        font.applyFont(loginLogoutButton, font.saralaBold);
+        font.applyFont(notificationDemoTitleTextView, font.saralaBold);
 
         setupScrollView();
         setupNotificationButtonLayout();
@@ -106,7 +106,7 @@ public class MainActivityViewModel implements ActivityViewModel {
     }
 
     private void setupNotificationButtonLayout() {
-        recyclerViewBuilder.setupRecyclerView(notificationRecyclerView, 6, false, true);
+        recyclerViewBuilder.setupRecyclerView(notificationRecyclerView, 16, false, true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         notificationRecyclerView.setLayoutManager(gridLayoutManager);
 
@@ -122,6 +122,15 @@ public class MainActivityViewModel implements ActivityViewModel {
                 shouldScrollTop = scrollY != 0;
             }
         });
+    }
+
+    private void setupLoginLogoutButton() {
+        //TODO: Handle toggle login state
+        if (currentUser.isSignedIn()) {
+
+        } else {
+
+        }
     }
 
     private void sendDeviceNotification() {

@@ -1,8 +1,9 @@
 package com.onesignal.sdktest.util;
 
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.util.Patterns;
+
+import com.onesignal.sdktest.constant.Text;
 
 public class ProfileUtil {
 
@@ -15,15 +16,15 @@ public class ProfileUtil {
         if (emailTextInputLayout.getEditText() != null) {
             String email = emailTextInputLayout.getEditText().getText().toString().trim();
             if (email.isEmpty()) {
-                emailTextInputLayout.setError("Email is required");
+                emailTextInputLayout.setError(Text.EMAIL_IS_REQUIRED);
                 return false;
             }
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                emailTextInputLayout.setError("Invalid email");
+                emailTextInputLayout.setError(Text.INVALID_EMAIL);
                 return false;
             }
         } else {
-            emailTextInputLayout.setError("Error");
+            emailTextInputLayout.setError(Text.ERROR);
             return false;
         }
         return true;

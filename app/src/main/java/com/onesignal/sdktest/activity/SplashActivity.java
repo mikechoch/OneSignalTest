@@ -43,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 };
 
-                if (!((SplashActivityViewModel) viewModel).isSignedIn(callback)) {
+                if (!((SplashActivityViewModel) viewModel).attemptSignIn(callback)) {
                     intentTo.loginActivity();
                 }
             }
