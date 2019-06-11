@@ -145,9 +145,19 @@ public class MainActivityViewModel implements ActivityViewModel {
             public void onClick(View v) {
                 if (currentUser.isSignedIn()) {
                     // Logout handling
-                    currentUser.setEmail(null);
-                    oneSignalPrefs.clearCachedEmail();
-                    intentTo.loginActivity();
+                    OneSignal.logoutEmail(new OneSignal.EmailUpdateHandler() {
+                        @Override
+                        public void onSuccess() {
+                            currentUser.setEmail(null);
+                            oneSignalPrefs.clearCachedEmail();
+                            intentTo.loginActivity();
+                        }
+
+                        @Override
+                        public void onFailure(OneSignal.EmailUpdateError error) {
+
+                        }
+                    });
                 } else {
                     // Login handling
                     intentTo.loginActivity();
