@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.onesignal.OSPermissionSubscriptionState;
@@ -21,6 +23,7 @@ import com.onesignal.sdktest.constant.Text;
 import com.onesignal.sdktest.type.Notification;
 import com.onesignal.sdktest.ui.RecyclerViewBuilder;
 import com.onesignal.sdktest.user.CurrentUser;
+import com.onesignal.sdktest.util.Animate;
 import com.onesignal.sdktest.util.Font;
 import com.onesignal.sdktest.util.IntentTo;
 import com.onesignal.sdktest.util.OneSignalPrefs;
@@ -30,6 +33,7 @@ import org.json.JSONObject;
 
 public class MainActivityViewModel implements ActivityViewModel {
 
+    private Animate animate;
     private CurrentUser currentUser;
     private Font font;
     private IntentTo intentTo;
@@ -41,6 +45,9 @@ public class MainActivityViewModel implements ActivityViewModel {
     private NestedScrollView nestedScrollView;
 
     private TextView accountTitleTextView;
+    private LinearLayout accountDetailsLinearLayout;
+    private TextView notSignedInTextView;
+    private ProgressBar loginLogoutButtonProgressBar;
     private Button loginLogoutButton;
 
     private TextView notificationDemoTitleTextView;
@@ -65,6 +72,7 @@ public class MainActivityViewModel implements ActivityViewModel {
     public ActivityViewModel onActivityCreated(Context context) {
         this.context = context;
 
+        animate = new Animate();
         currentUser = CurrentUser.getInstance();
         font = new Font(context);
         intentTo = new IntentTo(context);
@@ -76,6 +84,9 @@ public class MainActivityViewModel implements ActivityViewModel {
         nestedScrollView = getActivity().findViewById(R.id.main_activity_nested_scroll_view);
 
         accountTitleTextView = getActivity().findViewById(R.id.main_activity_account_title_text_view);
+        accountDetailsLinearLayout = getActivity().findViewById(R.id.main_activity_account_details_linear_layout);
+        notSignedInTextView = getActivity().findViewById(R.id.main_activity_account_not_signed_in_text_view);
+        loginLogoutButtonProgressBar = getActivity().findViewById(R.id.login_activity_login_logout_button_progress_button);
         loginLogoutButton = getActivity().findViewById(R.id.main_activity_account_login_logout_button);
 
         notificationDemoTitleTextView = getActivity().findViewById(R.id.main_activity_notification_demo_title_text_view);
@@ -87,14 +98,55 @@ public class MainActivityViewModel implements ActivityViewModel {
     @Override
     public ActivityViewModel setupInterfaceElements() {
         font.applyFont(accountTitleTextView, font.saralaBold);
+        font.applyFont(notSignedInTextView, font.saralaBold);
         font.applyFont(loginLogoutButton, font.saralaBold);
         font.applyFont(notificationDemoTitleTextView, font.saralaBold);
 
         setupScrollView();
-        setupLoginLogoutButton();
-        setupNotificationButtonLayout();
+        setupAccountLayout();
+        setupNotificationDemoLayout();
 
         return this;
+    }
+
+    private void setupAccountLayout() {
+
+
+        //TODO: Handle toggle login state
+        boolean isSignedIn = currentUser.isSignedIn();
+        animate.toggleAnimationView(!isSignedIn, View.GONE, accountDetailsLinearLayout, notSignedInTextView);
+        if (isSignedIn) {
+            loginLogoutButton.setText(Text.LOGOUT);
+        } else {
+            loginLogoutButton.setText(Text.LOGIN);
+        }
+
+        loginLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentUser.isSignedIn()) {
+                    // Logout handling
+                    animate.toggleAnimationView(true, View.GONE, loginLogoutButton, loginLogoutButtonProgressBar);
+                    OneSignal.logoutEmail(new OneSignal.EmailUpdateHandler() {
+                        @Override
+                        public void onSuccess() {
+                            currentUser.setEmail(null);
+                            oneSignalPrefs.clearCachedEmail();
+                            intentTo.loginActivity();
+                        }
+
+                        @Override
+                        public void onFailure(OneSignal.EmailUpdateError error) {
+                            //TODO: Show error logging out
+                            animate.toggleAnimationView(false, View.GONE, loginLogoutButton, loginLogoutButtonProgressBar);
+                        }
+                    });
+                } else {
+                    // Login handling
+                    intentTo.loginActivity();
+                }
+            }
+        });
     }
 
     @Override
@@ -113,7 +165,7 @@ public class MainActivityViewModel implements ActivityViewModel {
 
     }
 
-    private void setupNotificationButtonLayout() {
+    private void setupNotificationDemoLayout() {
         recyclerViewBuilder.setupRecyclerView(notificationRecyclerView, 16, false, true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         notificationRecyclerView.setLayoutManager(gridLayoutManager);
@@ -128,40 +180,6 @@ public class MainActivityViewModel implements ActivityViewModel {
             public void onScrollChanged() {
                 int scrollY = nestedScrollView.getScrollY();
                 shouldScrollTop = scrollY != 0;
-            }
-        });
-    }
-
-    private void setupLoginLogoutButton() {
-        //TODO: Handle toggle login state
-        if (currentUser.isSignedIn()) {
-            loginLogoutButton.setText(Text.LOGOUT);
-        } else {
-            loginLogoutButton.setText(Text.LOGIN);
-        }
-
-        loginLogoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentUser.isSignedIn()) {
-                    // Logout handling
-                    OneSignal.logoutEmail(new OneSignal.EmailUpdateHandler() {
-                        @Override
-                        public void onSuccess() {
-                            currentUser.setEmail(null);
-                            oneSignalPrefs.clearCachedEmail();
-                            intentTo.loginActivity();
-                        }
-
-                        @Override
-                        public void onFailure(OneSignal.EmailUpdateError error) {
-
-                        }
-                    });
-                } else {
-                    // Login handling
-                    intentTo.loginActivity();
-                }
             }
         });
     }

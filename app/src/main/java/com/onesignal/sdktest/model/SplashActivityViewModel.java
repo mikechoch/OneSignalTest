@@ -9,11 +9,13 @@ import com.onesignal.OneSignal;
 import com.onesignal.sdktest.constant.Key;
 import com.onesignal.sdktest.constant.Tag;
 import com.onesignal.sdktest.constant.Text;
+import com.onesignal.sdktest.user.CurrentUser;
 import com.onesignal.sdktest.util.IntentTo;
 import com.onesignal.sdktest.util.OneSignalPrefs;
 
 public class SplashActivityViewModel implements ActivityViewModel {
 
+    private CurrentUser currentUser;
     private OneSignalPrefs oneSignalPrefs;
 
     private Context context;
@@ -33,6 +35,7 @@ public class SplashActivityViewModel implements ActivityViewModel {
     public ActivityViewModel onActivityCreated(Context context) {
         this.context = context;
 
+        currentUser = CurrentUser.getInstance();
         oneSignalPrefs = OneSignalPrefs.getInstance(context);
 
         setupOneSignalSDK();
@@ -72,12 +75,13 @@ public class SplashActivityViewModel implements ActivityViewModel {
     }
 
     public boolean attemptSignIn(OneSignal.EmailUpdateHandler callback) {
-        boolean isSignedIn = oneSignalPrefs.exists(Key.USER_EMAIL_SHARED_PREF);
-        if (isSignedIn) {
+        boolean isEmailCached = oneSignalPrefs.exists(Key.USER_EMAIL_SHARED_PREF);
+        if (isEmailCached) {
             String email = oneSignalPrefs.getCachedUserEmail();
+            currentUser.setEmail(email);
             OneSignal.setEmail(email, callback);
         }
-        return isSignedIn;
+        return isEmailCached;
     }
 
 }
