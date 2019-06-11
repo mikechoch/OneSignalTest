@@ -105,8 +105,19 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="56dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical"
                         android:background="@color/colorPrimary">
+
+                        <ProgressBar
+                            android:id="@+id/login_activity_login_logout_button_progress_button"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="center"
+                            android:indeterminateTint="@android:color/white"
+                            android:visibility="gone"/>
 
                         <Button
                             android:id="@+id/main_activity_account_login_logout_button"

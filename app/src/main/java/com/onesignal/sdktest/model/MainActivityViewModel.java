@@ -2,6 +2,7 @@ package com.onesignal.sdktest.model;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.onesignal.OSPermissionSubscriptionState;
@@ -21,6 +23,7 @@ import com.onesignal.sdktest.constant.Text;
 import com.onesignal.sdktest.type.Notification;
 import com.onesignal.sdktest.ui.RecyclerViewBuilder;
 import com.onesignal.sdktest.user.CurrentUser;
+import com.onesignal.sdktest.util.Animate;
 import com.onesignal.sdktest.util.Font;
 import com.onesignal.sdktest.util.IntentTo;
 import com.onesignal.sdktest.util.OneSignalPrefs;
@@ -30,6 +33,7 @@ import org.json.JSONObject;
 
 public class MainActivityViewModel implements ActivityViewModel {
 
+    private Animate animate;
     private CurrentUser currentUser;
     private Font font;
     private IntentTo intentTo;
@@ -41,6 +45,7 @@ public class MainActivityViewModel implements ActivityViewModel {
     private NestedScrollView nestedScrollView;
 
     private TextView accountTitleTextView;
+    private ProgressBar loginLogoutButtonProgressBar;
     private Button loginLogoutButton;
 
     private TextView notificationDemoTitleTextView;
@@ -65,6 +70,7 @@ public class MainActivityViewModel implements ActivityViewModel {
     public ActivityViewModel onActivityCreated(Context context) {
         this.context = context;
 
+        animate = new Animate();
         currentUser = CurrentUser.getInstance();
         font = new Font(context);
         intentTo = new IntentTo(context);
@@ -76,6 +82,7 @@ public class MainActivityViewModel implements ActivityViewModel {
         nestedScrollView = getActivity().findViewById(R.id.main_activity_nested_scroll_view);
 
         accountTitleTextView = getActivity().findViewById(R.id.main_activity_account_title_text_view);
+        loginLogoutButtonProgressBar = getActivity().findViewById(R.id.login_activity_login_logout_button_progress_button);
         loginLogoutButton = getActivity().findViewById(R.id.main_activity_account_login_logout_button);
 
         notificationDemoTitleTextView = getActivity().findViewById(R.id.main_activity_notification_demo_title_text_view);
@@ -145,13 +152,29 @@ public class MainActivityViewModel implements ActivityViewModel {
             public void onClick(View v) {
                 if (currentUser.isSignedIn()) {
                     // Logout handling
+                    animate.toggleAnimationView(true, View.GONE, loginLogoutButton, loginLogoutButtonProgressBar);
+//                    OneSignal.logoutEmail(new OneSignal.EmailUpdateHandler() {
+//                        @Override
+//                        public void onSuccess() {
+//                            currentUser.setEmail(null);
+//                            oneSignalPrefs.clearCachedEmail();
+//                            intentTo.loginActivity();
+//                        }
+//
+//                        @Override
+//                        public void onFailure(OneSignal.EmailUpdateError error) {
+//                            //TODO: Show error logging out
+//                            animate.toggleAnimationView(false, View.GONE, loginLogoutButton, loginLogoutButtonProgressBar);
+//                        }
+//                    });
+
                     currentUser.setEmail(null);
                     oneSignalPrefs.clearCachedEmail();
-                    intentTo.loginActivity();
                 } else {
                     // Login handling
                     intentTo.loginActivity();
                 }
+                intentTo.loginActivity();
             }
         });
     }
