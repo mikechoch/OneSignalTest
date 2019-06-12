@@ -127,20 +127,7 @@ public class MainActivityViewModel implements ActivityViewModel {
                 if (currentUser.isSignedIn()) {
                     // Logout handling
                     animate.toggleAnimationView(true, View.GONE, loginLogoutButton, loginLogoutButtonProgressBar);
-                    OneSignal.logoutEmail(new OneSignal.EmailUpdateHandler() {
-                        @Override
-                        public void onSuccess() {
-                            currentUser.setEmail(null);
-                            oneSignalPrefs.clearCachedEmail();
-                            intentTo.loginActivity();
-                        }
-
-                        @Override
-                        public void onFailure(OneSignal.EmailUpdateError error) {
-                            //TODO: Show error logging out
-                            animate.toggleAnimationView(false, View.GONE, loginLogoutButton, loginLogoutButtonProgressBar);
-                        }
-                    });
+                    logoutEmail();
                 } else {
                     // Login handling
                     intentTo.loginActivity();
@@ -180,6 +167,23 @@ public class MainActivityViewModel implements ActivityViewModel {
             public void onScrollChanged() {
                 int scrollY = nestedScrollView.getScrollY();
                 shouldScrollTop = scrollY != 0;
+            }
+        });
+    }
+
+    private void logoutEmail() {
+        OneSignal.logoutEmail(new OneSignal.EmailUpdateHandler() {
+            @Override
+            public void onSuccess() {
+                currentUser.setEmail(null);
+                oneSignalPrefs.clearCachedEmail();
+                intentTo.loginActivity();
+            }
+
+            @Override
+            public void onFailure(OneSignal.EmailUpdateError error) {
+                //TODO: Show error logging out
+                animate.toggleAnimationView(false, View.GONE, loginLogoutButton, loginLogoutButtonProgressBar);
             }
         });
     }
