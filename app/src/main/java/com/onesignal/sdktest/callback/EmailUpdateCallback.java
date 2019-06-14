@@ -1,4 +1,4 @@
-package com.onesignal.sdktest;
+package com.onesignal.sdktest.callback;
 
 public interface EmailUpdateCallback {
 

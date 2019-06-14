@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.onesignal.sdktest.R;
+import com.onesignal.sdktest.notification.OneSignalNotificationSender;
 import com.onesignal.sdktest.type.Notification;
 import com.onesignal.sdktest.util.Animate;
 
@@ -88,7 +89,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
             notificationRelativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    OneSignalNotificationSender.sendDeviceNotification(notification);
                 }
             });
 

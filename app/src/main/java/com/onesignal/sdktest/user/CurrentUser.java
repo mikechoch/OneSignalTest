@@ -1,12 +1,10 @@
 package com.onesignal.sdktest.user;
 
 import android.util.Log;
-import android.view.View;
 
 import com.onesignal.OneSignal;
-import com.onesignal.sdktest.EmailUpdateCallback;
+import com.onesignal.sdktest.callback.EmailUpdateCallback;
 import com.onesignal.sdktest.constant.Tag;
-import com.onesignal.sdktest.constant.Text;
 
 public class CurrentUser {
 

@@ -5,8 +5,9 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.onesignal.OSNotification;
 import com.onesignal.OneSignal;
-import com.onesignal.sdktest.EmailUpdateCallback;
+import com.onesignal.sdktest.callback.EmailUpdateCallback;
 import com.onesignal.sdktest.constant.Key;
 import com.onesignal.sdktest.constant.Tag;
 import com.onesignal.sdktest.constant.Text;
@@ -67,6 +68,18 @@ public class SplashActivityViewModel implements ActivityViewModel {
     private void setupOneSignalSDK() {
         // OneSignal Initialization
         OneSignal.startInit(context)
+                .setNotificationReceivedHandler(new OneSignal.NotificationReceivedHandler() {
+                    @Override
+                    public void notificationReceived(OSNotification notification) {
+
+                    }
+                })
+                .setNotificationReceivedHandler(new OneSignal.NotificationReceivedHandler() {
+                    @Override
+                    public void notificationReceived(OSNotification notification) {
+
+                    }
+                })
                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
                 .unsubscribeWhenNotificationsAreDisabled(true)
                 .init();

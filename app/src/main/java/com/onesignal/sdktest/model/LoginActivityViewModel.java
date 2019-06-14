@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.onesignal.sdktest.EmailUpdateCallback;
+import com.onesignal.sdktest.callback.EmailUpdateCallback;
 import com.onesignal.sdktest.R;
 import com.onesignal.sdktest.constant.Tag;
 import com.onesignal.sdktest.constant.Text;

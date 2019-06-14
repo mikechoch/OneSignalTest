@@ -13,6 +13,6 @@
     <string name="notification_demo">Notification Demo</string>
 
     <string name="settings">Settings</string>
-    <string name="subscribe">Subscribe</string>
+    <string name="subscribe_colon">Subscribe:</string>
 
 </resources>
