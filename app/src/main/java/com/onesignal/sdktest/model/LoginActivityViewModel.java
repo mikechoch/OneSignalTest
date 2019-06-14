@@ -11,9 +11,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.onesignal.OneSignal;
+import com.onesignal.sdktest.EmailUpdateCallback;
 import com.onesignal.sdktest.R;
-import com.onesignal.sdktest.constant.Key;
 import com.onesignal.sdktest.constant.Tag;
 import com.onesignal.sdktest.constant.Text;
 import com.onesignal.sdktest.user.CurrentUser;
@@ -106,16 +105,8 @@ public class LoginActivityViewModel implements ActivityViewModel {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentUser.getEmail() != null) {
-                    emailTextInputEditText.setEnabled(true);
-                    emailTextInputEditText.setText(Text.EMPTY);
-
-                    currentUser.setEmail(null);
-
-                } else {
-                    animate.toggleAnimationView(true, View.GONE, loginButton, loginButtonProgressBar);
-                    attemptLogin();
-                }
+                animate.toggleAnimationView(true, View.GONE, loginButton, loginButtonProgressBar);
+                attemptLogin();
             }
 
             private void attemptLogin() {
@@ -130,24 +121,17 @@ public class LoginActivityViewModel implements ActivityViewModel {
     }
 
     private void signInEmail(final String email) {
-        OneSignal.setEmail(email, new OneSignal.EmailUpdateHandler() {
+        currentUser.signIn(email, new EmailUpdateCallback() {
             @Override
             public void onSuccess() {
-                currentUser.setEmail(email);
                 oneSignalPrefs.cacheUserEmail(email);
                 intentTo.mainActivity();
                 Log.d(Tag.DEBUG, Text.EMAIL_LOGIN_SUCCESSFUL);
             }
 
             @Override
-            public void onFailure(OneSignal.EmailUpdateError error) {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        animate.toggleAnimationView(false, View.GONE, loginButton, loginButtonProgressBar);
-                    }
-                });
-                Log.e(Tag.ERROR, error.getMessage());
+            public void onFailure() {
+                animate.toggleAnimationView(false, View.GONE, loginButton, loginButtonProgressBar);
             }
         });
     }

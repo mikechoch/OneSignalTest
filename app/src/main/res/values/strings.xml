@@ -7,7 +7,12 @@
 
     <string name="continue_to_demo">Continue to demo</string>
 
-    <string name="notification_demo">Notification Demo</string>
     <string name="account">Account</string>
+    <string name="email_colon">Email:</string>
+
+    <string name="notification_demo">Notification Demo</string>
+
+    <string name="settings">Settings</string>
+    <string name="subscribe">Subscribe</string>
 
 </resources>

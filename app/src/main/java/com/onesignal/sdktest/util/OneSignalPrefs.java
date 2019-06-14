@@ -21,8 +21,16 @@ public class OneSignalPrefs {
         return sharedPreferences.getString(Key.USER_EMAIL_SHARED_PREF, Text.EMPTY);
     }
 
+    public boolean getCachedSubscriptionStatus() {
+        return sharedPreferences.getBoolean(Key.SUBSCRIPTION_SHARED_PREF, true);
+    }
+
     public void cacheUserEmail(String email) {
         sharedPreferences.edit().putString(Key.USER_EMAIL_SHARED_PREF, email).apply();
+    }
+
+    public void cacheSubscriptionStatus(boolean subscribed) {
+        sharedPreferences.edit().putBoolean(Key.SUBSCRIPTION_SHARED_PREF, subscribed).apply();
     }
 
     public void clearCachedEmail() {

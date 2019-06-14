@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.onesignal.OneSignal;
+import com.onesignal.sdktest.EmailUpdateCallback;
 import com.onesignal.sdktest.R;
 import com.onesignal.sdktest.model.ActivityViewModel;
 import com.onesignal.sdktest.model.SplashActivityViewModel;
@@ -31,14 +32,14 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                OneSignal.EmailUpdateHandler callback = new OneSignal.EmailUpdateHandler() {
+                EmailUpdateCallback callback = new EmailUpdateCallback() {
                     @Override
                     public void onSuccess() {
                         intentTo.mainActivity();
                     }
 
                     @Override
-                    public void onFailure(OneSignal.EmailUpdateError error) {
+                    public void onFailure() {
                         intentTo.loginActivity();
                     }
                 };
