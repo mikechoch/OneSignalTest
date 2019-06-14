@@ -30,7 +30,6 @@
             android:paddingTop="10dp"
             android:paddingBottom="8dp"
             android:background="@drawable/ripple_selector_white_red"
-            android:clickable="true"
             android:orientation="vertical">
 
             <RelativeLayout

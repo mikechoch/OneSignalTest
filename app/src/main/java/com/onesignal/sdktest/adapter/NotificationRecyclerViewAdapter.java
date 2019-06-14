@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -62,7 +63,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
 
     public class NotificationViewHolder extends RecyclerView.ViewHolder {
 
-        private RelativeLayout notificationRelativeLayout;
+        private LinearLayout notificationLinearLayout;
         private ImageView notificationImageView;
         private ProgressBar notificationProgressBar;
         private TextView notificationTextView;
@@ -72,7 +73,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         NotificationViewHolder(View itemView) {
             super(itemView);
 
-            notificationRelativeLayout = itemView.findViewById(R.id.notification_recycler_view_item_relative_layout);
+            notificationLinearLayout = itemView.findViewById(R.id.notification_recycler_view_item_linear_layout);
             notificationImageView = itemView.findViewById(R.id.notification_recycler_view_item_image_view);
             notificationProgressBar = itemView.findViewById(R.id.notification_recycler_view_item_progress_bar);
             notificationTextView = itemView.findViewById(R.id.notification_recycler_view_item_text_view);
@@ -86,7 +87,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         private void populateInterfaceElements(int position) {
             animate.toggleAnimationView(true, View.INVISIBLE, notificationImageView, notificationProgressBar);
 
-            notificationRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            notificationLinearLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     OneSignalNotificationSender.sendDeviceNotification(notification);
