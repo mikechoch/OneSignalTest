@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -98,7 +97,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
 
             Glide.with(context)
                     .asBitmap()
-                    .load(notification.getIconUrl())
+                    .load(notification.getLargeIconUrl())
                     .into(new BitmapImageViewTarget(notificationImageView) {
                         @Override
                         protected void setResource(Bitmap resource) {

@@ -62,6 +62,7 @@
             android:paddingBottom="12dp"
             android:clipChildren="false"
             android:clipToPadding="false"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
 
             <LinearLayout

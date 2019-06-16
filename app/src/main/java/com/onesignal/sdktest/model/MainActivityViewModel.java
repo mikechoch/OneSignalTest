@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.onesignal.OSSubscriptionObserver;
+import com.onesignal.OSSubscriptionStateChanges;
 import com.onesignal.OneSignal;
 import com.onesignal.sdktest.callback.EmailUpdateCallback;
 import com.onesignal.sdktest.R;
@@ -117,7 +119,6 @@ public class MainActivityViewModel implements ActivityViewModel {
         font.applyFont(accountTitleTextView, font.saralaBold);
         font.applyFont(emailTextView, font.saralaBold);
         font.applyFont(userEmailTextView, font.saralaRegular);
-        font.applyFont(notSignedInTextView, font.saralaBold);
         font.applyFont(notSignedInTextView, font.saralaBold);
         font.applyFont(loginLogoutButton, font.saralaBold);
         font.applyFont(notificationDemoTitleTextView, font.saralaBold);

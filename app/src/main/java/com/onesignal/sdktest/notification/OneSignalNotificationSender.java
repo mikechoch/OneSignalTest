@@ -18,10 +18,15 @@ public class OneSignalNotificationSender {
             return;
 
         try {
-            JSONObject notificationContent = new JSONObject("{'contents': {'en': 'This is the body'}," +
-                    "'include_player_ids': ['" + userId + "']," +
+            JSONObject notificationContent = new JSONObject("{'include_player_ids': ['" + userId + "']," +
+                    "'android_sound': 'nil'," +
+                    "'small_icon': '" + notification.getSmallIconRes() + "'," +
+                    "'large_icon': '" + notification.getLargeRedIconUrl() + "'," +
+                    "'android_led_color': 'FFE9444E'," +
+                    "'android_accent_color': 'FFE9444E'," +
                     "'headings': {'en': '" + notification.getTitle() + "'}," +
-                    "'andoird_group': '" + notification.getTitle() + "'}");
+                    "'contents': {'en': '" + notification.getRandomMessage() + "'}," +
+                    "'android_group': '" + notification.getTitle() + "'}");
             OneSignal.postNotification(notificationContent, new OneSignal.PostNotificationResponseHandler() {
                 @Override
                 public void onSuccess(JSONObject response) {
