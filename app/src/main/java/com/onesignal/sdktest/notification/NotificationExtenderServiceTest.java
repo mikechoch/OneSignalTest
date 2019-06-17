@@ -1,6 +1,7 @@
 package com.onesignal.sdktest.notification;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
 import com.onesignal.NotificationExtenderService;

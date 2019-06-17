@@ -93,11 +93,11 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
                 }
             });
 
-            notificationTextView.setText(notification.getTitle());
+            notificationTextView.setText(notification.getGroup());
 
             Glide.with(context)
                     .asBitmap()
-                    .load(notification.getLargeIconUrl())
+                    .load(notification.getIconUrl())
                     .into(new BitmapImageViewTarget(notificationImageView) {
                         @Override
                         protected void setResource(Bitmap resource) {
